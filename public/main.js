@@ -141,7 +141,6 @@ function stripHtml(html)
 // Working on Service Workers
 if('serviceWorker' in navigator) {
   send().catch(err => console.log(err));
-  alert();
 }
 
 // Register SW, Register Push, Send Push

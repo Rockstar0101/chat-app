@@ -6,13 +6,11 @@ const urlsToCache = [ '../index.html', '../offline.html' ];
 self.addEventListener('push', e => {
     const data = e.data.json()
     console.log('Push Received...')
-    self.registration.showNotification(data.title, {
-        body: 'test body',
+    self.registration.showNotification(data.user, {
+        body: data.msg,
         icon: 'favicon.ico'
     })
 })
-
-console.log('Hello');
 
 // Install SW
 self.addEventListener('install', (event) => {

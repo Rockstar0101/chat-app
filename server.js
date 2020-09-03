@@ -66,12 +66,15 @@ wss.on('connection', function connection(ws) {
 });
 
 // Every three seconds broadcast "{ message: 'Hello hello!' }" to all connected clients
-var broadcast = function(msg) {
+var subs;
+var broadcast = async function(msg) {
   // wss.clients is an array of all connected clients
   wss.clients.forEach(function each(client) {
     client.send(msg);
     console.log('Sent: ' + msg);
   });
+
+  subs && notifyUser(subs, msg);
 }
 
 // setInterval(broadcast, 3000);
@@ -80,18 +83,24 @@ var broadcast = function(msg) {
 app.post('/subscribe', (req, res) => {
   //Get Push Subscription Object
   const { subscription } = req.body;
+  subs = subscription;
 
   // Resource created alert
   res.status(201).json({})
 
   // Create Payload
-  const payload = JSON.stringify({ title: 'ChatApp'})
-
-  // Pass Object into sendNotification
-  webpush.sendNotification(subscription, payload).catch(error => {
-    console.error(error)
-  })
+  // const payload = JSON.stringify({ user: 'ChatApp', msg: 'Server Notifying'})
+  // notifyUser(subscription, payload)
 })
+
+function notifyUser(subscription, payload) {
+    // Pass Object into sendNotification
+    const notify = 
+          webpush.sendNotification(subscription, payload).catch(error => {
+            console.error(error)
+          })
+  return notify;
+}
 
 app.get('/offline', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/offline.html'))
