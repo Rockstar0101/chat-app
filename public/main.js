@@ -1,5 +1,5 @@
 
-const socket = new WebSocket('ws://192.168.1.8:2222/')
+const socket = new WebSocket('wss://localhost:2222/')
 const wsStatus = document.getElementById('wsLogs');
 const userName = document.getElementById('userName');
 const inpName = document.getElementById('inpName');
