@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
+    "build": "npm i && node server",
     "dev": "nodemon server"
   },
   "author": "govind saini",
