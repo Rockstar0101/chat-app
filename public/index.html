@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png" />
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="manifest" href="/manifest.json"/>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <title>Web Sockets</title>
+    <style>
+        body{
+            user-select: none;
+        }
+        #wsLogs{
+            height:400px;
+            overflow-y:auto;
+            overflow-x: hidden;
+        }
+        #wsLogs > p{
+            margin:16px 0;
+            overflow-wrap: break-word;
+        }
+        .msg, .self {
+            position: relative;
+            background: rgb(207, 255, 207);
+            border-radius: 10px;
+            padding:5px;
+            width: max-content;
+            max-width: 60%;
+            min-width: 50px;
+            overflow-wrap: break-word;
+            position: relative;
+        }
+        .msg{
+            animation: received 0.3s ease-in-out;
+        }
+        .self{
+            margin-left: auto!important;
+            margin-right:0!important;
+            animation: sent 0.3s ease-in-out;
+        }
+        .timestamp{
+            position: absolute;
+            right:5px;
+            bottom:-15px;
+            font-size: 0.6em;
+        }
+        #nameForm, #msgForm{
+            display: none;
+        }
+
+        @keyframes sent {
+            from {top: 100px; right: -100px;}
+            to {top: 0px;right:0;}
+        }
+
+        @keyframes received {
+            from {top: -100px; right: 100px;}
+            to {top: 0px;right:0;}
+        }
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+             background: #cccccc; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #999;
+            border-radius:5px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888; 
+        }
+
+    </style>
+</head>
+<body id="pdf2">
+    <div class="container py-3" id="pdf">
+        <div class="jumbotron">
+            <h1 class="text-center">Welcome <span id="userName">to Index Page</span></h1>
+            <h3 class="text-center">...Testing Web Sockets...</h3>
+        </div>
+        <div class="alert alert-dark p-3" id="newMsg">
+            <!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+            <h6>WebSocket Logs:</h6>
+            <div id="wsLogs" class="">
+                <!--  -->
+            </div>
+        </div>
+        <div class="bg-light p-3">
+            <div id="nameForm">
+                <label for="inpName"><i class="fas fa-user-secret"></i> What do you want to call yourself?</label>
+                <form class="form-inline col-md-12">
+                    <div class="form-group mx-3 mb-2">
+                      <input type="text" class="form-control" id="inpName" placeholder="Please Enter your name...">
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="subName">Confirm identity</button>
+                </form>
+            </div>
+            <div id="msgForm">
+                <p class="mt-0">Type your message here:</p>
+                <form class="form-inline col-md-12">
+                    <div class="form-group col-10 mb-2">
+                      <div contenteditable="true" id="inpMsg" style="width:100%;background:white;padding:7.5px;border:1px solid gray;border-radius:3px;" placeholder="Hello"></div>
+                    </div>
+                    <button type="button" class="btn btn-primary mb-2" id="subMsg"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </form>
+            </div>
+            <p class="text-danger text-center mb-0" id="errMsg">&nbsp;</p>
+        </div>
+    </div>
+    <!--  -->
+    <script src="main.js"></script>
+</body>
+</html>
