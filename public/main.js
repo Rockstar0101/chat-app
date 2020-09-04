@@ -1,5 +1,5 @@
 
-const socket = new WebSocket('wss://localhost:2222/')
+const socket = new WebSocket('wss://4dc7317c58c4.ngrok.io')
 const wsStatus = document.getElementById('wsLogs');
 const userName = document.getElementById('userName');
 const inpName = document.getElementById('inpName');
